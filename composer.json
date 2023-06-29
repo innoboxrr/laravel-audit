@@ -1,0 +1,42 @@
+{
+    "name": "innoboxrr/laravel-audit",
+    "version": "1.0.0",
+    "description": "Módulo de auditoría",
+    "type": "library",
+    "license": "InnoboxRR",
+    "autoload": {
+        "psr-4": {
+            "Innoboxrr\\LaravelAudit\\": "src/",
+            "Innoboxrr\\LaravelAudit\\Database\\Factories\\": "database/factories/",
+            "Innoboxrr\\LaravelAudit\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Homero Raul",
+            "email": "h.raulvc@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "orchestra/testbench": "^8.0"
+    },
+    "require": {
+        "innoboxrr/larapack-generator": "^2.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Innoboxrr\\LaravelAudit\\Providers\\AppServiceProvider",
+                "Innoboxrr\\LaravelAudit\\Providers\\AuthServiceProvider",
+                "Innoboxrr\\LaravelAudit\\Providers\\EventServiceProvider",
+                "Innoboxrr\\LaravelAudit\\Providers\\RouteServiceProvider"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Innoboxrr\\LaravelAudit\\Tests\\": "tests/"
+        }
+    }
+}
