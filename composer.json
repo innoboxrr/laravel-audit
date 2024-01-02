@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Módulo de auditoría",
     "type": "library",
-    "license": "InnoboxRR",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Innoboxrr\\LaravelAudit\\": "src/",
