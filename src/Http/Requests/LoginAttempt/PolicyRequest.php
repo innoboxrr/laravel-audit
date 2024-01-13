@@ -52,12 +52,12 @@ class PolicyRequest extends FormRequest
     public function handle()
     {
 
-         $loginAttempt = ($request->id) ? 
-            LoginAttempt::findOrFail($request->id) : 
+         $loginAttempt = ($this->id) ? 
+            LoginAttempt::findOrFail($this->id) : 
             app(LoginAttempt::class);
 
         return response()->json([
-            $request->policy => user()->can($request->policy, $loginAttempt),
+            $this->policy => user()->can($this->policy, $loginAttempt),
         ]);
 
     }

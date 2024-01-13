@@ -29,13 +29,13 @@ class DeleteRequest extends FormRequest
     public function handle()
     {
 
-        $loginAttempt = LoginAttempt::findOrFail($request->login_attempt_id);
+        $loginAttempt = LoginAttempt::findOrFail($this->login_attempt_id);
 
         $loginAttempt->deleteModel();
 
         $response = new LoginAttemptResource($loginAttempt);
 
-        event(new DeleteEvent($loginAttempt, $request, $response));
+        event(new DeleteEvent($loginAttempt, $this, $response));
 
         return $response;
 

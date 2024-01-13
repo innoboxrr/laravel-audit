@@ -34,8 +34,8 @@ class ShowRequest extends FormRequest
     public function handle()
     {
 
-        $audit = Audit::where('id', $request->audit_id)
-            ->with($request->load_relations ?? [])
+        $audit = Audit::where('id', $this->audit_id)
+            ->with($this->load_relations ?? [])
             ->firstOrFail();
 
         return new AuditResource($audit);

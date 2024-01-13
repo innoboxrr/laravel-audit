@@ -31,13 +31,13 @@ class UpdateRequest extends FormRequest
     public function handle()
     {
 
-        $loginAttempt = LoginAttempt::findOrFail($request->login_attempt_id);
+        $loginAttempt = LoginAttempt::findOrFail($this->login_attempt_id);
 
-        $loginAttempt = $loginAttempt->updateModel($request);
+        $loginAttempt = $loginAttempt->updateModel($this);
 
         $response = new LoginAttemptResource($loginAttempt);
 
-        event(new UpdateEvent($loginAttempt, $request, $response));
+        event(new UpdateEvent($loginAttempt, $this, $response));
 
         return $response;
 

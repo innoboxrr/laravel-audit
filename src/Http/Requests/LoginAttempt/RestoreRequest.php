@@ -30,13 +30,13 @@ class RestoreRequest extends FormRequest
     public function handle()
     {
 
-        $loginAttempt = LoginAttempt::withTrashed()->findOrFail($request->login_attempt_id);
+        $loginAttempt = LoginAttempt::withTrashed()->findOrFail($this->login_attempt_id);
 
         $loginAttempt->restoreModel();
 
         $response = new LoginAttemptResource($loginAttempt);
 
-        event(new RestoreEvent($loginAttempt, $request, $response));
+        event(new RestoreEvent($loginAttempt, $this, $response));
 
         return $response;
 

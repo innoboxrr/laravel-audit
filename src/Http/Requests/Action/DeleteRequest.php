@@ -29,13 +29,13 @@ class DeleteRequest extends FormRequest
     public function handle()
     {
 
-        $action = Action::findOrFail($request->action_id);
+        $action = Action::findOrFail($this->action_id);
 
         $action->deleteModel();
 
         $response = new ActionResource($action);
 
-        event(new DeleteEvent($action, $request, $response));
+        event(new DeleteEvent($action, $this, $response));
 
         return $response;
 

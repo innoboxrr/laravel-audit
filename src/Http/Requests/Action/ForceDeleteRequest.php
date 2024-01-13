@@ -29,13 +29,13 @@ class ForceDeleteRequest extends FormRequest
     public function handle()
     {
 
-        $action = Action::withTrashed()->findOrFail($request->action_id);
+        $action = Action::withTrashed()->findOrFail($this->action_id);
 
         $action->forceDeleteModel();
 
         $response = new ActionResource($action);
 
-        event(new ForceDeleteEvent($action, $request, $response));
+        event(new ForceDeleteEvent($action, $this, $response));
 
         return $response;
 

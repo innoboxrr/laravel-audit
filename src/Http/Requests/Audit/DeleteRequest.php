@@ -29,13 +29,13 @@ class DeleteRequest extends FormRequest
     public function handle()
     {
 
-        $audit = Audit::findOrFail($request->audit_id);
+        $audit = Audit::findOrFail($this->audit_id);
 
         $audit->deleteModel();
 
         $response = new AuditResource($audit);
 
-        event(new DeleteEvent($audit, $request, $response));
+        event(new DeleteEvent($audit, $this, $response));
 
         return $response;
 

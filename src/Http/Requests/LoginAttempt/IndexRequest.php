@@ -28,7 +28,7 @@ class IndexRequest extends FormRequest
 
         $builder = new Builder();
 
-        $query = $builder->get(LoginAttempt::class, $request);
+        $query = $builder->get(LoginAttempt::class, $this);
 
         return LoginAttemptResource::collection($query);
 

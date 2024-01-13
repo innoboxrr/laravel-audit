@@ -52,12 +52,12 @@ class PolicyRequest extends FormRequest
     public function handle()
     {
 
-         $audit = ($request->id) ? 
-            Audit::findOrFail($request->id) : 
+         $audit = ($this->id) ? 
+            Audit::findOrFail($this->id) : 
             app(Audit::class);
 
         return response()->json([
-            $request->policy => user()->can($request->policy, $audit),
+            $this->policy => user()->can($this->policy, $audit),
         ]);
 
     }

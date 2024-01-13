@@ -34,8 +34,8 @@ class ShowRequest extends FormRequest
     public function handle()
     {
 
-        $action = Action::where('id', $request->action_id)
-            ->with($request->load_relations ?? [])
+        $action = Action::where('id', $this->action_id)
+            ->with($this->load_relations ?? [])
             ->firstOrFail();
 
         return new ActionResource($action);

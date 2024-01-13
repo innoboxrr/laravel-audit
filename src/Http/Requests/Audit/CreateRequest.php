@@ -28,11 +28,11 @@ class CreateRequest extends FormRequest
     public function handle()
     {
 
-        $audit = (new Audit)->createModel($request);
+        $audit = (new Audit)->createModel($this);
 
         $response = new AuditResource($audit);
 
-        event(new CreateEvent($audit, $request, $response));
+        event(new CreateEvent($audit, $this, $response));
 
         return $response;
 

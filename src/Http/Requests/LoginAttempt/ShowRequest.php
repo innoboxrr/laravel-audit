@@ -34,8 +34,8 @@ class ShowRequest extends FormRequest
     public function handle()
     {
 
-        $loginAttempt = LoginAttempt::where('id', $request->login_attempt_id)
-            ->with($request->load_relations ?? [])
+        $loginAttempt = LoginAttempt::where('id', $this->login_attempt_id)
+            ->with($this->load_relations ?? [])
             ->firstOrFail();
 
         return new LoginAttemptResource($loginAttempt);

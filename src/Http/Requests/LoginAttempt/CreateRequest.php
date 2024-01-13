@@ -28,11 +28,11 @@ class CreateRequest extends FormRequest
     public function handle()
     {
 
-        $loginAttempt = (new LoginAttempt)->createModel($request);
+        $loginAttempt = (new LoginAttempt)->createModel($this);
 
         $response = new LoginAttemptResource($loginAttempt);
 
-        event(new CreateEvent($loginAttempt, $request, $response));
+        event(new CreateEvent($loginAttempt, $this, $response));
 
         return $response;
 

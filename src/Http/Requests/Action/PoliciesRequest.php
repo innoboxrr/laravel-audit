@@ -23,8 +23,8 @@ class PoliciesRequest extends FormRequest
     public function handle()
     {
 
-        $action = ($request->id) ? 
-            Action::findOrFail($request->id) : 
+        $action = ($this->id) ? 
+            Action::findOrFail($this->id) : 
             app(Action::class);
 
         return response()->json([

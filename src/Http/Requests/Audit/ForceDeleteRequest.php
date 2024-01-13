@@ -29,13 +29,13 @@ class ForceDeleteRequest extends FormRequest
     public function handle()
     {
 
-        $audit = Audit::withTrashed()->findOrFail($request->audit_id);
+        $audit = Audit::withTrashed()->findOrFail($this->audit_id);
 
         $audit->forceDeleteModel();
 
         $response = new AuditResource($audit);
 
-        event(new ForceDeleteEvent($audit, $request, $response));
+        event(new ForceDeleteEvent($audit, $this, $response));
 
         return $response;
 

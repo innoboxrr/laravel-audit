@@ -29,13 +29,13 @@ class ForceDeleteRequest extends FormRequest
     public function handle()
     {
 
-        $loginAttempt = LoginAttempt::withTrashed()->findOrFail($request->login_attempt_id);
+        $loginAttempt = LoginAttempt::withTrashed()->findOrFail($this->login_attempt_id);
 
         $loginAttempt->forceDeleteModel();
 
         $response = new LoginAttemptResource($loginAttempt);
 
-        event(new ForceDeleteEvent($loginAttempt, $request, $response));
+        event(new ForceDeleteEvent($loginAttempt, $this, $response));
 
         return $response;
 

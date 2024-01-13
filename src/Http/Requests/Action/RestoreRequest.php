@@ -30,13 +30,13 @@ class RestoreRequest extends FormRequest
     public function handle()
     {
 
-        $action = Action::withTrashed()->findOrFail($request->action_id);
+        $action = Action::withTrashed()->findOrFail($this->action_id);
 
         $action->restoreModel();
 
         $response = new ActionResource($action);
 
-        event(new RestoreEvent($action, $request, $response));
+        event(new RestoreEvent($action, $this, $response));
 
         return $response;
 

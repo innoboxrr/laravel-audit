@@ -28,7 +28,14 @@ class IndexRequest extends FormRequest
 
         $builder = new Builder();
 
-        $query = $builder->get(Audit::class, $request);
+        $builder->setBasePath(config('laravel-audit.builder.basePath'));
+
+        $builder->setOptions([
+            'filtersPath' => config('laravel-audit.builder.filtersPath'),
+            'filtersNamespace' => config('laravel-audit.builder.filtersNamespace'),
+        ]);
+
+        $query = $builder->get(Audit::class, $this->all());
 
         return AuditResource::collection($query);
 

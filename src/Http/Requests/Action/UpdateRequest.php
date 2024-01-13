@@ -31,13 +31,13 @@ class UpdateRequest extends FormRequest
     public function handle()
     {
 
-        $action = Action::findOrFail($request->action_id);
+        $action = Action::findOrFail($this->action_id);
 
-        $action = $action->updateModel($request);
+        $action = $action->updateModel($this);
 
         $response = new ActionResource($action);
 
-        event(new UpdateEvent($action, $request, $response));
+        event(new UpdateEvent($action, $this, $response));
 
         return $response;
 

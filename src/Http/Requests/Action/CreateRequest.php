@@ -28,11 +28,11 @@ class CreateRequest extends FormRequest
     public function handle()
     {
 
-        $action = (new Action)->createModel($request);
+        $action = (new Action)->createModel($this);
 
         $response = new ActionResource($action);
 
-        event(new CreateEvent($action, $request, $response));
+        event(new CreateEvent($action, $this, $response));
 
         return $response;
 

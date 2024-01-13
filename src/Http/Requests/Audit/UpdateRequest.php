@@ -31,13 +31,13 @@ class UpdateRequest extends FormRequest
     public function handle()
     {
 
-        $audit = Audit::findOrFail($request->audit_id);
+        $audit = Audit::findOrFail($this->audit_id);
 
-        $audit = $audit->updateModel($request);
+        $audit = $audit->updateModel($this);
 
         $response = new AuditResource($audit);
 
-        event(new UpdateEvent($audit, $request, $response));
+        event(new UpdateEvent($audit, $this, $response));
 
         return $response;
 

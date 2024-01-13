@@ -23,8 +23,8 @@ class PoliciesRequest extends FormRequest
     public function handle()
     {
 
-        $audit = ($request->id) ? 
-            Audit::findOrFail($request->id) : 
+        $audit = ($this->id) ? 
+            Audit::findOrFail($this->id) : 
             app(Audit::class);
 
         return response()->json([

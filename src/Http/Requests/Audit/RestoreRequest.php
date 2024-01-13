@@ -30,13 +30,13 @@ class RestoreRequest extends FormRequest
     public function handle()
     {
 
-        $audit = Audit::withTrashed()->findOrFail($request->audit_id);
+        $audit = Audit::withTrashed()->findOrFail($this->audit_id);
 
         $audit->restoreModel();
 
         $response = new AuditResource($audit);
 
-        event(new RestoreEvent($audit, $request, $response));
+        event(new RestoreEvent($audit, $this, $response));
 
         return $response;
 
