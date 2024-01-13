@@ -20,24 +20,35 @@ class PoliciesRequest extends FormRequest
         ];
     }
 
-    public function handle()
+    public function handle($controllerClass)
     {
 
-        $audit = ($this->id) ? 
-            Audit::findOrFail($this->id) : 
-            app(Audit::class);
+        $model = ($this->id) ? Audit::findOrFail($this->id) : app(Audit::class);
 
-        return response()->json([
-            'index'          => user()->can('index', $audit),
-            'view'           => user()->can('view', $audit),
-            'viewAny'        => user()->can('viewAny', $audit),
-            'create'         => user()->can('create', $audit),
-            'update'         => user()->can('update', $audit),
-            'delete'         => user()->can('delete', $audit),
-            'restore'        => user()->can('restore', $audit),
-            'forceDelete'    => user()->can('forceDelete', $audit),
-            'export'         => user()->can('export', $audit),
-        ]);
+        $result = [];
+
+        $methods = get_class_methods($controllerClass);
+
+        $policyMethodMapping = [
+            'show' => 'view', // Mapea 'show' a 'view'
+            // Agrega aquí más mapeos si es necesario
+        ];
+
+        foreach ($methods as $method) {
+
+            $policyMethod = $policyMethodMapping[$method] ?? $method; // Obtiene el nombre de la política correspondiente, o el mismo nombre del método si no hay mapeo
+
+            if (method_exists($controllerClass, $method) && is_callable([$controllerClass, $method])) {
+            
+                $result[$method] = $this->user()->can($policyMethod, $model);
+        
+                $result[$policyMethod] = $this->user()->can($policyMethod, $model);
+            
+            }
+
+        }
+
+        return response()->json($result);
 
     }
     
