@@ -20,7 +20,8 @@ class ActionFactory extends Factory
             'type' => 'create',
             'actionable_id' => 1,
             'actionable_type' => 'App\Models\User',
-            'template' => fake()->text(),
+            // La tabla actions no tiene columna template: el factory no podia crear.
+            'description' => fake()->sentence(),
         ];
     }
 
