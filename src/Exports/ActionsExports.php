@@ -37,7 +37,8 @@ class ActionsExports implements FromView
 
         $builder = new Builder();
 
-        return $builder->get(Action::class, $this->request);
+        // search-surge 3 recibe un arreglo; pasarle la peticion era un TypeError.
+        return $builder->get(Action::class, is_array($this->request) ? $this->request : $this->request->all());
 
     }
 
