@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('login_attempts');
+        Schema::dropIfExists(config('laravel-audit.db_prefix') . 'login_attempts');
     }
 };

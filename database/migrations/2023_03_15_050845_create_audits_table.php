@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('audits');
+        Schema::dropIfExists(config('laravel-audit.db_prefix') . 'audits');
     }
 };
