@@ -57,7 +57,7 @@ class PolicyRequest extends FormRequest
             app(Audit::class);
 
         return response()->json([
-            $this->policy => user()->can($this->policy, $audit),
+            $this->policy => $this->user()->can($this->policy, $audit),
         ]);
 
     }

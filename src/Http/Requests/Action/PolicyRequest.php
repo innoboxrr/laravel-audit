@@ -57,7 +57,7 @@ class PolicyRequest extends FormRequest
             app(Action::class);
 
         return response()->json([
-            $this->policy => user()->can($this->policy, $action),
+            $this->policy => $this->user()->can($this->policy, $action),
         ]);
 
     }

@@ -57,7 +57,7 @@ class PolicyRequest extends FormRequest
             app(LoginAttempt::class);
 
         return response()->json([
-            $this->policy => user()->can($this->policy, $loginAttempt),
+            $this->policy => $this->user()->can($this->policy, $loginAttempt),
         ]);
 
     }
