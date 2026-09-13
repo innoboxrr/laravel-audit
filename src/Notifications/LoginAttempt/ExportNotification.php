@@ -64,7 +64,7 @@ class ExportNotification extends Notification
     private function createExport()
     {
 
-        Excel::store(new LoginAttemptsExports($this->request), $this->path, config('laravel-audit.export_disk', 's3'));
+        Excel::store(new LoginAttemptsExports($this->request), $this->path, config('laravel-audit.export_disk', 'local'));
 
     }
 
