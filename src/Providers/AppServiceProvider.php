@@ -25,7 +25,9 @@ class AppServiceProvider extends ServiceProvider
             
             // $this->publishes([__DIR__.'/../../resources/views' => resource_path('views/vendor/innoboxrrlaravelaudit'),], 'views');
 
-            // $this->publishes([__DIR__.'/../../config/laravel-audit.php' => config_path('laravel-audit.php')], 'config');
+            // El README documentaba --tag=laravel-audit-config y no se publicaba
+            // nada. Se registra con ese tag y con `config`, el del ecosistema.
+            $this->publishes([__DIR__.'/../../config/laravel-audit.php' => config_path('laravel-audit.php')], ['laravel-audit-config', 'config']);
 
         }
 
