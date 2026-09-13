@@ -2,10 +2,14 @@
 
 namespace Innoboxrr\LaravelAudit\Policies;
 
-use App\Models\User;
-use Innoboxrr\LaravelAudit\Models\LoginAttempt;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Innoboxrr\LaravelAudit\Models\LoginAttempt;
 
+/*
+ * isAdmin() e isAllowTo() los pone el host y pueden no existir: sin ellos la
+ * respuesta es un 403, no un error fatal. Tampoco se exige App\Models\User.
+ */
 class LoginAttemptPolicy
 {
     use HandlesAuthorization;
@@ -15,66 +19,62 @@ class LoginAttemptPolicy
 
         $exceptAbilities = [];
 
-        if($user->isAdmin() && !in_array($ability, $exceptAbilities)){
-        
+        if (method_exists($user, 'isAdmin') && $user->isAdmin() && !in_array($ability, $exceptAbilities)) {
+
             return true;
-            
+
         }
 
     }
 
-    public function index(User $user)
+    public function index(Authenticatable $user)
     {
-        if (!method_exists($user, 'isAllowTo')) return false;
-        return $user->isAllowTo('index', LoginAttempt::class);
+        return $this->allows($user, 'index', LoginAttempt::class);
     }
 
-    public function viewAny(User $user)
+    public function viewAny(Authenticatable $user)
     {
-        if (!method_exists($user, 'isAllowTo')) return false;
-        return $user->isAllowTo('viewAny', LoginAttempt::class);
+        return $this->allows($user, 'viewAny', LoginAttempt::class);
     }
 
-    public function view(User $user, LoginAttempt $loginAttempt)
-    {           
-        if (!method_exists($user, 'isAllowTo')) return false;
-        return $user->isAllowTo('view', $loginAttempt);
-    }
-
-    public function create(User $user)
-    {        
-        if (!method_exists($user, 'isAllowTo')) return false;
-        return $user->isAllowTo('create', LoginAttempt::class);
-    }
-
-    public function update(User $user, LoginAttempt $loginAttempt)
+    public function view(Authenticatable $user, LoginAttempt $loginAttempt)
     {
-        if (!method_exists($user, 'isAllowTo')) return false;
-        return $user->isAllowTo('update', $loginAttempt);   
+        return $this->allows($user, 'view', $loginAttempt);
     }
 
-    public function delete(User $user, LoginAttempt $loginAttempt)
+    public function create(Authenticatable $user)
     {
-        if (!method_exists($user, 'isAllowTo')) return false;
-        return $user->isAllowTo('delete', $loginAttempt);
+        return $this->allows($user, 'create', LoginAttempt::class);
     }
 
-    public function restore(User $user, LoginAttempt $loginAttempt)
+    public function update(Authenticatable $user, LoginAttempt $loginAttempt)
     {
-        if (!method_exists($user, 'isAllowTo')) return false;
-        return $user->isAllowTo('restore', $loginAttempt);
+        return $this->allows($user, 'update', $loginAttempt);
     }
 
-    public function forceDelete(User $user, LoginAttempt $loginAttempt)
+    public function delete(Authenticatable $user, LoginAttempt $loginAttempt)
     {
-        if (!method_exists($user, 'isAllowTo')) return false;
-        return $user->isAllowTo('forceDelete', $loginAttempt);
+        return $this->allows($user, 'delete', $loginAttempt);
     }
 
-    public function export(User $user)
+    public function restore(Authenticatable $user, LoginAttempt $loginAttempt)
     {
-        if (!method_exists($user, 'isAllowTo')) return false;
-        return $user->isAllowTo('export', LoginAttempt::class);
+        return $this->allows($user, 'restore', $loginAttempt);
+    }
+
+    public function forceDelete(Authenticatable $user, LoginAttempt $loginAttempt)
+    {
+        return $this->allows($user, 'forceDelete', $loginAttempt);
+    }
+
+    public function export(Authenticatable $user)
+    {
+        return $this->allows($user, 'export', LoginAttempt::class);
+    }
+
+    protected function allows(Authenticatable $user, string $ability, $target): bool
+    {
+        return method_exists($user, 'isAllowTo') && (bool) $user->isAllowTo($ability, $target);
     }
 
 }
