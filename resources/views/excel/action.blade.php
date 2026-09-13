@@ -11,15 +11,15 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($audits as $audit)
+        @foreach($actions as $action)
             <tr>
-                <td>{{ $audit->id }}</td>
-                <td>{{ $audit->type }}</td>
-                <td>{{ $audit->actionable_id }}</td>
-                <td>{{ $audit->actionable_type }}</td>
-                <td>{{ $audit->description }}</td>
-                <td>{{ $audit->created_at }}</td>
-                <td>{{ $audit->updated_at }}</td>
+                <td>{{ $action->id }}</td>
+                <td>{{ $action->type }}</td>
+                <td>{{ $action->actionable_id }}</td>
+                <td>{{ $action->actionable_type }}</td>
+                <td>{{ $action->description }}</td>
+                <td>{{ $action->created_at }}</td>
+                <td>{{ $action->updated_at }}</td>
             </tr>
         @endforeach
     </tbody>

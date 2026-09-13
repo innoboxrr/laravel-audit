@@ -16,20 +16,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($actions as $action)
+        @foreach($audits as $audit)
             <tr>
-                <td>{{ $action->id }}</td>
-                <td>{{ $action->before }}</td>
-                <td>{{ $action->after }}</td>
-                <td>{{ $action->route }}</td>
-                <td>{{ $action->ip_address }}</td>
-                <td>{{ $action->user_agent }}</td>
-                <td>{{ $action->loggable_id }}</td>
-                <td>{{ $action->loggable_type }}</td>
-                <td>{{ $action->user_id }}</td>
-                <td>{{ $action->action_id }}</td>
-                <td>{{ $action->created_at }}</td>
-                <td>{{ $action->updated_at }}</td>
+                <td>{{ $audit->id }}</td>
+                <td>{{ $audit->before }}</td>
+                <td>{{ $audit->after }}</td>
+                <td>{{ $audit->route }}</td>
+                <td>{{ $audit->ip_address }}</td>
+                <td>{{ $audit->user_agent }}</td>
+                <td>{{ $audit->loggable_id }}</td>
+                <td>{{ $audit->loggable_type }}</td>
+                <td>{{ $audit->user_id }}</td>
+                <td>{{ $audit->action_id }}</td>
+                <td>{{ $audit->created_at }}</td>
+                <td>{{ $audit->updated_at }}</td>
             </tr>
         @endforeach
     </tbody>
