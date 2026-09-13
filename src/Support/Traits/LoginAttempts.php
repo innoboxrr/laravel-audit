@@ -21,8 +21,10 @@ trait LoginAttempts
         LoginAttempt::create([
             'email' => $this->email,
             'status' => $status,
-            'ip_address' => request()->ip(),
-            'user_agent' => request()->header('User-Agent'),
+            // Las columnas no admiten null: un cliente sin User-Agent no debe
+            // tumbar el login que se esta registrando.
+            'ip_address' => (string) request()->ip(),
+            'user_agent' => (string) request()->header('User-Agent'),
         ]);
     }
 

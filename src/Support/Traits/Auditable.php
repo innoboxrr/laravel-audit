@@ -26,8 +26,10 @@ trait Auditable
 		    	'before' => json_encode($this->getOriginal()),
 		    	'after' => ($this->isDirty()) ? json_encode($this->getAttributes()) : null,
 		        'route' => request()->url(),
-		        'ip_address' => request()->ip(),
-		        'user_agent' => request()->header('User-Agent'),
+		        // Las columnas no admiten null y un cliente sin User-Agent (curl,
+		        // un script) hacia fallar la operacion que se estaba auditando.
+		        'ip_address' => (string) request()->ip(),
+		        'user_agent' => (string) request()->header('User-Agent'),
 		        'loggable_id' => $this->id,
 		        'loggable_type' => get_class($this),
 		        'user_id' => auth()->id(),
