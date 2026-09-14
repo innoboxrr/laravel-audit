@@ -7,8 +7,15 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as AppEventServiceProvider;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as AppRouteServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Innoboxrr\LaravelAudit\Models\Action;
+use Innoboxrr\LaravelAudit\Models\Audit;
+use Innoboxrr\LaravelAudit\Models\LoginAttempt;
+use Innoboxrr\LaravelAudit\Policies\ActionPolicy;
+use Innoboxrr\LaravelAudit\Policies\AuditPolicy;
+use Innoboxrr\LaravelAudit\Policies\LoginAttemptPolicy;
 use Innoboxrr\LaravelAudit\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -59,6 +66,22 @@ final class HostApplicationIsolationTest extends TestCase
             [SendEmailVerificationNotification::class],
             Event::getRawListeners()[Registered::class] ?? []
         );
+    }
+
+    #[Test]
+    public function las_policies_se_registran_sin_depender_del_adivinador_de_nombres(): void
+    {
+        // Laravel adivina Models\Audit => Policies\AuditPolicy, pero la
+        // aplicacion puede cambiar esa regla con Gate::guessPolicyNamesUsing().
+        $expected = [
+            Action::class => ActionPolicy::class,
+            Audit::class => AuditPolicy::class,
+            LoginAttempt::class => LoginAttemptPolicy::class,
+        ];
+
+        foreach ($expected as $model => $policy) {
+            $this->assertSame($policy, Gate::policies()[$model] ?? null, $model);
+        }
     }
 
     #[Test]
