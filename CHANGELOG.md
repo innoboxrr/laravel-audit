@@ -15,6 +15,28 @@ y este proyecto sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Fixed
 
+## [2.1.1] - 2026-09-13
+
+Lo que el paquete le hacía a la aplicación de Laravel 11+ que lo instala al
+arrancar.
+
+### Corregido
+
+- La aplicación cargaba sus `routes/web.php` y `api.php` una vez más por este
+  paquete: `RouteServiceProvider` heredaba del de Foundation, que vuelve a
+  ejecutar el cargador de `withRouting()`. Ahora hereda de
+  `Illuminate\Support\ServiceProvider` y registra las rutas en `boot()`, salvo
+  con las rutas cacheadas.
+- Cada usuario nuevo recibía repetido el correo de verificación:
+  `EventServiceProvider` heredaba del de Foundation, que agrega otro
+  `SendEmailVerificationNotification` para `Registered`.
+- `AuthServiceProvider` nunca registraba `AuditPolicy`, `ActionPolicy` ni
+  `LoginAttemptPolicy`: armaba mal el nombre del modelo, y las policies solo
+  se aplicaban por el adivinador de nombres de Laravel. Ahora se registran con
+  `Gate::policy()`.
+
+URIs, nombres de ruta, middleware y respuestas no cambian.
+
 ## [2.1.0] - 2026-09-13
 
 Lo que hacía falta para que el paquete funcione en una aplicación nueva de
