@@ -100,3 +100,7 @@ Three resources, `audit`, `action` and `login_attempt`, each under `/api/innobox
 [Innobox R&R](https://github.com/innoboxrr) — extracted from production systems. Part of a catalogue of 52 open-source packages on Packagist and npm.
 
 **[innobox.systems](https://innobox.systems)**
+
+## Documentación / Documentation
+
+Documentación completa del ecosistema, en español y en inglés / Full ecosystem documentation, in Spanish and English: <https://innoboxrr.github.io/docs/paquetes/laravel-audit>
